@@ -40,7 +40,7 @@ public class Window extends javax.swing.JFrame {
          
          // get data
          
-         s1.setRadius(0.2);
+         s1.setRadius(1);
          s2.setRadius(0.2);
          s3.setRadius(0.2);
          
@@ -48,7 +48,6 @@ public class Window extends javax.swing.JFrame {
          graph2.update(s2.getRadius(), timer.getDelay());
          graph3.update(s3.getRadius(), timer.getDelay());
          
-        // System.out.println(timer.getDelay());
          
         }
     };
@@ -74,7 +73,7 @@ public class Window extends javax.swing.JFrame {
         
        this.setTitle("Project Ping Pong -  A new look at the game through the eyes of an electronicus");
        
-       timer = new Timer(1000 ,taskPerformer);
+       timer = new Timer(100 ,taskPerformer);
        timer.setRepeats(true);
        timer.start();
 
@@ -110,11 +109,6 @@ public class Window extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PalletPanel.setBackground(new java.awt.Color(0, 0, 0));
-        PalletPanel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                PalletPanelKeyPressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout PalletPanelLayout = new javax.swing.GroupLayout(PalletPanel);
         PalletPanel.setLayout(PalletPanelLayout);
@@ -271,10 +265,6 @@ public class Window extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void PalletPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PalletPanelKeyPressed
-        pallet.draw();
-    }//GEN-LAST:event_PalletPanelKeyPressed
 
     /**
      * @param args the command line arguments

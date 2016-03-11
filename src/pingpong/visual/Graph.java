@@ -38,16 +38,14 @@ public class Graph extends Visual{
    
 
     public void update(double data, double sampleTime) {
-       amountOfSampleTime += sampleTime;
-       System.out.println(timeOfClear);
-         
-        if (amountOfSampleTime <= timeOfClear) {
-            double verticalPointOnXass = (amountOfSampleTime/timeOfClear) * width;
-            double verticalPointOnYass = data * height;
+       amountOfSampleTime += sampleTime;      
+        if (amountOfSampleTime < timeOfClear) {
+            double verticalPointOnXass = ((amountOfSampleTime/timeOfClear) * width) + vector.getX();
+            double verticalPointOnYass = (height + vector.getY())  - (data * height) ;
             
             System.out.print(verticalPointOnYass);
             this.graphic.setColor(Color.BLUE);  
-            this.graphic.fillOval((int) verticalPointOnXass, (int) verticalPointOnYass, 10, 10);
+            this.graphic.fillOval((int) verticalPointOnXass, (int) verticalPointOnYass, 4, 4);
             
         } else {
             super.clear();
