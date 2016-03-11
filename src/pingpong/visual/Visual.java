@@ -5,6 +5,7 @@
  */
 package pingpong.visual;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import pingpong.Vector;
@@ -39,8 +40,9 @@ public abstract class Visual {
     public abstract void draw();
     public abstract void update();
     
-    public void clear(){ 
-     graphic.fillRect(vector.getX(), vector.getY(), width, height); 
+    public void clear(){
+     this.graphic.setColor(Color.black); 
+     this.graphic.fillRect(vector.getX(), vector.getY(), width, height); 
     }
         
     

@@ -30,7 +30,6 @@ public class Pallet extends Visual{
     
     @Override
     public void draw(){
-      super.clear(); 
       
       this.graphic.setColor(Color.decode("#6E8B3D"));  
       this.graphic.fillOval(vector.getX(), vector.getY(), width, width);
@@ -56,6 +55,7 @@ public class Pallet extends Visual{
 
     @Override
     public void update() {
+        super.clear(); 
         draw();
         drawSensors();
         drawRadiusSensor();

@@ -16,40 +16,49 @@ import pingpong.math.Sensor;
  */
 public class Graph extends Visual{
     
-    private int amountOfSamples;
-    private Sensor s1;
+    private int amountOfSampleTime;
+    private double timeOfClear;
     
    
-    public Graph(JPanel jpanel, Sensor s) {
+    public Graph(JPanel jpanel, double timeOfClear) {
         super(jpanel);
-        this.amountOfSamples = vector.getX();
-        this.s1 = s;
-     /*   this.ratio = 1.4;
-        this.width *= 1.1;
-        this.vector.setX(vector.getX() - 20);   // deze code moet nog aangepast worden
-        */
+        this.amountOfSampleTime = 0;
+        this.timeOfClear = timeOfClear;
     }
 
     @Override
     public void draw() {
+        System.out.println("lol " + timeOfClear);
         this.graphic.setColor(Color.WHITE);
         this.graphic.drawLine(vector.getX(), vector.getY(),
                                 vector.getX(), vector.getY() + height);
         this.graphic.drawLine(vector.getX(), vector.getY() + height,
                                 vector.getX() + width, vector.getY() + height);
-        
-        
-        /*
-        this.graphic.setColor(Color.BLUE);  
-      this.graphic.fillOval(vector.getX(), vector.getY(), 20, 20);
-        
-        */
     }
    
 
+    public void update(double data, double sampleTime) {
+       amountOfSampleTime += sampleTime;
+       System.out.println(timeOfClear);
+         
+        if (amountOfSampleTime <= timeOfClear) {
+            double verticalPointOnXass = (amountOfSampleTime/timeOfClear) * width;
+            double verticalPointOnYass = data * height;
+            
+            System.out.print(verticalPointOnYass);
+            this.graphic.setColor(Color.BLUE);  
+            this.graphic.fillOval((int) verticalPointOnXass, (int) verticalPointOnYass, 10, 10);
+            
+        } else {
+            super.clear();
+            this.draw();
+            this.amountOfSampleTime = 0;
+        } 
+    }
+
     @Override
     public void update() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
        
         
@@ -57,45 +66,3 @@ public class Graph extends Visual{
 }
 
 
-/*
-public class Graph{
-   
-   private Vector vertAssStartCoord,vertAssEndCoord;
-   private Vector horzAssStartCoord,horzAssEndCoord;
-   private float lenghtYass,lenghtXass;
-   private float amountOfSamples;
-   
-   Graph(float x, float y, float lenghtYass, float lenghtXass){
-     this.vertAssStartCoord = new Vector(x,y);
-     this.vertAssEndCoord = new Vector(x,y + lenghtYass);
-     this.horzAssStartCoord = new Vector(x,y + lenghtYass);
-     this.horzAssEndCoord = new Vector(x + lenghtXass,y + lenghtYass);
-     
-     this.lenghtYass = lenghtYass;
-     this.lenghtXass = lenghtXass; 
-     
-     this.amountOfSamples = horzAssStartCoord.getX();
-   }
-   
-   public void create(){
-     stroke(255);
-     fill(#0000FF);
-     line(vertAssStartCoord.getX(), vertAssStartCoord.getY(), vertAssEndCoord.getX(), vertAssEndCoord.getY());
-     line(horzAssStartCoord.getX(), horzAssStartCoord.getY(), horzAssEndCoord.getX(), horzAssEndCoord.getY());  
-   }
-   
-   public void update( float data){
-      if (amountOfSamples == lenghtXass){
-        amountOfSamples = horzAssStartCoord.getX();
-        clear();
-        create();
-      } else {
-        amountOfSamples++;
-        noStroke();
-        fill(#0000FF);
-        ellipse(amountOfSamples, vertAssEndCoord.getY() - (data * lenghtYass) , 5, 5);
-      }
-   }
-}
-
-*/

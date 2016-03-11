@@ -21,11 +21,11 @@ import pingpong.visual.*;
 public class Window extends javax.swing.JFrame {
 
     private Pallet pallet;
-    private int test = 0;
     private Graph graph1,graph2,graph3;
     private Sensor s1,s2,s3;
     private LinkedList<Sensor> sensorList;
-    
+    private Timer timer;
+
     
     
     
@@ -37,6 +37,19 @@ public class Window extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
          // this will check for updates for the graph 
+         
+         // get data
+         
+         s1.setRadius(0.2);
+         s2.setRadius(0.2);
+         s3.setRadius(0.2);
+         
+         graph1.update(s1.getRadius(), timer.getDelay());
+         graph2.update(s2.getRadius(), timer.getDelay());
+         graph3.update(s3.getRadius(), timer.getDelay());
+         
+        // System.out.println(timer.getDelay());
+         
         }
     };
     
@@ -55,16 +68,16 @@ public class Window extends javax.swing.JFrame {
         sensorList.add(s3);
 
         pallet = new Pallet(PalletPanel, sensorList);
-        graph1 = new Graph(graphPanel1, s1);
-        graph2 = new Graph(graphPanel2, s2);
-        graph3 = new Graph(graphPanel3, s3);
+        graph1 = new Graph(graphPanel1, 10000);
+        graph2 = new Graph(graphPanel2, 10000);
+        graph3 = new Graph(graphPanel3, 10000);
         
        this.setTitle("Project Ping Pong -  A new look at the game through the eyes of an electronicus");
        
-       Timer timer = new Timer(100 ,taskPerformer);
+       timer = new Timer(1000 ,taskPerformer);
        timer.setRepeats(true);
        timer.start();
-       
+
 
     }
 
@@ -77,7 +90,6 @@ public class Window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel5 = new javax.swing.JLabel();
         PalletPanel = new javax.swing.JPanel();
         graphPanel1 = new javax.swing.JPanel();
         graphPanel2 = new javax.swing.JPanel();
@@ -95,14 +107,12 @@ public class Window extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        jLabel5.setText("jLabel5");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PalletPanel.setBackground(new java.awt.Color(0, 0, 0));
-        PalletPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PalletPanelMousePressed(evt);
+        PalletPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PalletPanelKeyPressed(evt);
             }
         });
 
@@ -118,11 +128,6 @@ public class Window extends javax.swing.JFrame {
         );
 
         graphPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        graphPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                graphPanel1MousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout graphPanel1Layout = new javax.swing.GroupLayout(graphPanel1);
         graphPanel1.setLayout(graphPanel1Layout);
@@ -267,13 +272,9 @@ public class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PalletPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PalletPanelMousePressed
+    private void PalletPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PalletPanelKeyPressed
         pallet.draw();
-    }//GEN-LAST:event_PalletPanelMousePressed
-
-    private void graphPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_graphPanel1MousePressed
-        graph1.draw();
-    }//GEN-LAST:event_graphPanel1MousePressed
+    }//GEN-LAST:event_PalletPanelKeyPressed
 
     /**
      * @param args the command line arguments
@@ -301,11 +302,19 @@ public class Window extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        Window window = new Window();
+        window.setVisible(true);
+        window.pallet.draw();
+     //   window.graph1.draw();
+      //  window.graph2.draw();
+    //    window.graph3.draw();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Window().setVisible(true); 
+               window.pallet.draw();
+               window.graph1.draw();
+               window.graph2.draw();
+               window.graph3.draw();
             }
             
         });
@@ -323,7 +332,6 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
