@@ -28,7 +28,6 @@ public class Graph extends Visual{
 
     @Override
     public void draw() {
-        System.out.println("lol " + timeOfClear);
         this.graphic.setColor(Color.WHITE);
         this.graphic.drawLine(vector.getX(), vector.getY(),
                                 vector.getX(), vector.getY() + height);

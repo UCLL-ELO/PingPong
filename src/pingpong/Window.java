@@ -41,7 +41,7 @@ public class Window extends javax.swing.JFrame {
          // get data
          
          s1.setRadius(1);
-         s2.setRadius(0.2);
+         s2.setRadius(0.5);
          s3.setRadius(0.2);
          
          graph1.update(s1.getRadius(), timer.getDelay());
@@ -295,9 +295,6 @@ public class Window extends javax.swing.JFrame {
         Window window = new Window();
         window.setVisible(true);
         window.pallet.draw();
-     //   window.graph1.draw();
-      //  window.graph2.draw();
-    //    window.graph3.draw();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
