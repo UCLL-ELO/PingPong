@@ -50,17 +50,22 @@ public class Window extends javax.swing.JFrame {
    
     public Window() {
         initComponents();
+
         sensorList = new LinkedList();
         
-        s1 = new Sensor( new Vector(0, 0));
-        s2 = new Sensor( new Vector(0, 0));
-        s3 = new Sensor( new Vector(0, 0));
+        s1 = new Sensor( new Vector(PalletPanel.getWidth()/2 -7, 30));
+        s2 = new Sensor( new Vector(18, PalletPanel.getHeight()/3 + 10));
+        s3 = new Sensor( new Vector(PalletPanel.getHeight()/3 + 133,
+                                        PalletPanel.getHeight()/3 + 10));
+        
+        
         
         sensorList.add(s1);
         sensorList.add(s2);
         sensorList.add(s3);
 
         pallet = new Pallet(PalletPanel, sensorList);
+        
         graph1 = new Graph(graphPanel1, 10000);
         graph2 = new Graph(graphPanel2, 10000);
         graph3 = new Graph(graphPanel3, 10000);

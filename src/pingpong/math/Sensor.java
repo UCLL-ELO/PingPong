@@ -64,4 +64,6 @@ public class Sensor{
     intersection.setX((int) xIntersect);
     intersection.setY((int) yIntersect);  
   }   
+  
+  
 }
