@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.Timer;
 import pingpong.hardware.Data_input;
+import pingpong.math.ApolloniusSolver;
 import pingpong.math.Sensor;
 import pingpong.visual.*;
 
@@ -28,6 +29,7 @@ public class Window extends javax.swing.JFrame {
     private Timer timer;
     private Data_input serialCom;
     
+    
     private ActionListener taskPerformer = new ActionListener() {
   
         @Override
@@ -36,14 +38,21 @@ public class Window extends javax.swing.JFrame {
          
          // get data
          
-         s1.setRadius(1);
-         s2.setRadius(0.5);
-         s3.setRadius(0.2);
+         s1.setRadiusDiff(0);
+         s2.setRadiusDiff(100);
+         s3.setRadiusDiff(20);
+         
+         ApolloniusSolver apolloniusSolver = new ApolloniusSolver();
+         pallet.setVectorBall(ApolloniusSolver.calculateRange(sensorList));
+         
+         pallet.draw();
+         pallet.drawBall();
          
          graph1.update(s1.getRadius(), timer.getDelay());
          graph2.update(s2.getRadius(), timer.getDelay());
          graph3.update(s3.getRadius(), timer.getDelay());        
-
+         
+         
         }
     };
     

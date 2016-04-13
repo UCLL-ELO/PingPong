@@ -14,8 +14,9 @@ import pingpong.Vector;
  * @author Gilles
  */
 public class Sensor{
-    private Vector position,intersection;
+    private Vector position;
     private double radius;
+    private double radiusDiff;
 
     public Sensor(Vector vector) {
         this.position = vector;
@@ -26,8 +27,11 @@ public class Sensor{
     public void setRadius(double radius) { this.radius = radius; }
     public double getRadius() { return this.radius; }
     
+    public void setRadiusDiff(double radiusDiff) { this.radiusDiff = radiusDiff; }
+    public double getRadiusDiff() { return this.radiusDiff; }
+    
     public Vector getVector() { return this.position; }
-    public Vector getIntersection() { return this.intersection; }
+ /*   public Vector getIntersection() { return this.intersection; }
     
      public void calculateSnijpunten(Sensor s){
     double rFirst = this.radius/2;
@@ -63,7 +67,7 @@ public class Sensor{
     
     intersection.setX((int) xIntersect);
     intersection.setY((int) yIntersect);  
-  }   
+  }   */
   
   
 }

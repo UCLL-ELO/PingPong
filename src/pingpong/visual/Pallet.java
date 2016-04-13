@@ -19,6 +19,7 @@ import pingpong.Vector;
 public class Pallet extends Visual{
     
     private Sensor s1,s2,s3;
+    private Vector ball;
    
     public Pallet(JPanel jpanel, LinkedList<Sensor> sensorList){
        super(jpanel);
@@ -26,6 +27,7 @@ public class Pallet extends Visual{
        this.s2 = sensorList.get(1);
        this.s3 = sensorList.get(2);
        
+       ball = new Vector(0,0);
     }
     
     @Override
@@ -47,18 +49,19 @@ public class Pallet extends Visual{
         this.graphic.fillOval(s3.getVector().getX(), s3.getVector().getY(), 20, 20);
     }
     
-    public void drawRadiusSensor(){
-        
-    }
+   public void drawBall(){
+       this.graphic.setColor(Color.BLUE);  
+       this.graphic.fillOval(ball.getX(), ball.getY(), 20, 20);
+   }
     
-    
+   public void setVectorBall(Vector v1) { ball = v1; } 
 
     @Override
     public void update() {
         super.clear(); 
         draw();
         drawSensors();
-        drawRadiusSensor();
+        drawBall();
     }
     
     
