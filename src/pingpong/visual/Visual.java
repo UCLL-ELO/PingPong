@@ -7,6 +7,8 @@ package pingpong.visual;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import pingpong.Vector;
 
@@ -16,38 +18,40 @@ import pingpong.Vector;
  */
 public abstract class Visual {
     
-    protected Graphics graphic;
+    protected Graphics2D graphic;
     protected Vector vector;
     protected int width,height;
-    protected double ratio;
     
     public Visual(JPanel jpanel){
         
       this.vector = new Vector(0,0);
-      this.graphic = jpanel.getGraphics();
+      this.graphic = (Graphics2D)jpanel.getGraphics();
       
-      this.ratio =  1.2;
-      
+      graphic.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING, 
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+    }
+    
+    public abstract void draw();
+  
+    public void clear(){
+     this.graphic.setColor(Color.gray); 
+     this.graphic.fillRect(vector.getX(), vector.getY(), width, height); 
+    }
+    
+    public void CreateFramework(double ratio, JPanel jpanel){
       this.width = (int) (jpanel.getWidth()/ratio);
       this.height = (int) (jpanel.getHeight()/ratio);
       
       this.vector.setX ((jpanel.getWidth() - this.width)/2);
       this.vector.setY ((jpanel.getHeight() - this.height)/2);
-      
-      
     }
     
-    public abstract void draw();
-    public abstract void update();
-    
-    public void clear(){
-     this.graphic.setColor(Color.black); 
-     this.graphic.fillRect(vector.getX(), vector.getY(), width, height); 
-    }
-        
-    
-    
-          
-    
-    
+    public void CreateFramework( JPanel jpanel, int width, int height){
+      this.width = width;
+      this.height = height;
+      
+      this.vector.setX ((jpanel.getWidth() - width)/2);
+      this.vector.setY ((jpanel.getHeight() - height)/2);
+    } 
 }

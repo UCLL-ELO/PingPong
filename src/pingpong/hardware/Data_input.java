@@ -31,15 +31,27 @@ public class Data_input implements SerialPortEventListener{
     // SETTINGS:
     /** Milliseconds to block while waiting for port open */
     private static final int TIME_OUT = 2000;
-    private static int DATA_RATE = 9600;
+    private static int DATA_RATE;
+    
+    private int[] buffer = new int[30];
+    
+    public Data_input(){
+        this.DATA_RATE = 9600;
+        for(int i : buffer){i = -1; }
+    }
+ 
     
    private LinkedList<String> comPortList = new LinkedList();
 
-    public synchronized void serialEvent(SerialPortEvent oEvent) {
+    public synchronized void serialEvent(SerialPortEvent oEvent) {    
     if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
      try {
-        String inputLine=input.readLine();
-        System.out.println(inputLine);
+        for (int i : buffer) {
+            if (buffer[i] == -1){
+                buffer[i] = input.read();
+                break;
+            }
+        }
      } catch (Exception e) {
         System.err.println(e.toString());
      }
@@ -76,13 +88,7 @@ public class Data_input implements SerialPortEventListener{
       }
     }
     
-    public void changeBaud(int value){
-        
-        System.out.println("");
-      //   System.out.println(value);
-        
-       // this.DATA_RATE = value; 
-    }
+     public int[] getBuffer(){ return buffer; }
         
     public LinkedList<String> getComPort() {
         comPortList.clear();    
@@ -100,7 +106,7 @@ public class Data_input implements SerialPortEventListener{
                 portId = setCurrPortId;
             }
         }       
-    }  
+    } 
 }
 
 

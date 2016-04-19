@@ -7,7 +7,7 @@ package databank;
 
 /**
  *
- * @author Gilles
+ * @author Martijn Festjens
  */
 import java.io.IOException;
 import java.io.FileReader;

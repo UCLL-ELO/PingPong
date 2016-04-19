@@ -5,7 +5,6 @@
  */
 package pingpong.visual;
 
-import pingpong.math.Sensor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -18,53 +17,21 @@ import pingpong.Vector;
  */
 public class Pallet extends Visual{
     
-    private Sensor s1,s2,s3;
-    private Vector ball;
-   
-    public Pallet(JPanel jpanel, LinkedList<Sensor> sensorList){
+    private Sensor s1,s2,s3; 
+    public Pallet(JPanel jpanel){
        super(jpanel);
-       this.s1 = sensorList.get(0);
-       this.s2 = sensorList.get(1);
-       this.s3 = sensorList.get(2);
-       
-       ball = new Vector(0,0);
+       CreateFramework(jpanel, 285 , 400 );  
     }
     
     @Override
     public void draw(){
-      
-      this.graphic.setColor(Color.decode("#6E8B3D"));  
-      this.graphic.fillOval(vector.getX(), vector.getY(), width, width);
+      super.clear();
+      this.graphic.setColor(Color.DARK_GRAY);  
+      this.graphic.fillOval(vector.getX(), vector.getY(), width, 312);
+      this.graphic.setColor(Color.gray);
+      this.graphic.fillRect(0, vector.getY() + width, width, height-width);
       this.graphic.setColor(Color.decode("#8B3E2F"));
-      this.graphic.fillRect((vector.getX() + width/2) - width/8,
-                              vector.getY() + width, width/4, height-width);
-     // this.graphic.drawRect(vector.getX(), vector.getY(), width, height);
-     drawSensors();
-    }
-    
-    public void drawSensors(){
-        this.graphic.setColor(Color.BLUE);  
-        this.graphic.fillOval(s1.getVector().getX(), s1.getVector().getY(), 20, 20);
-        this.graphic.fillOval(s2.getVector().getX(), s2.getVector().getY(), 20, 20);
-        this.graphic.fillOval(s3.getVector().getX(), s3.getVector().getY(), 20, 20);
-    }
-    
-   public void drawBall(){
-       this.graphic.setColor(Color.BLUE);  
-       this.graphic.fillOval(ball.getX(), ball.getY(), 20, 20);
-   }
-    
-   public void setVectorBall(Vector v1) { ball = v1; } 
-
-    @Override
-    public void update() {
-        super.clear(); 
-        draw();
-        drawSensors();
-        drawBall();
-    }
-    
-    
-    
-    
+      this.graphic.fillRect((vector.getX() + width/2) - 55/2,
+                              vector.getY() + width, 55, height-width);
+    }     
 }
