@@ -34,14 +34,23 @@ public class Data_input implements SerialPortEventListener{
     private static int DATA_RATE;
     
     private int[] buffer = new int[30];
+    private Boolean connection;
+    
+     private LinkedList<String> comPortList;
+     private LinkedList<CommPortIdentifier> comPortNumberList;
     
     public Data_input(){
         this.DATA_RATE = 9600;
-        for(int i : buffer){i = -1; }
+        
+        comPortList = new LinkedList();
+        comPortNumberList = new LinkedList();
+        
+        for(int i = 0; i < buffer.length; i++){buffer[i] = -1; }
+        connection = false;
     }
  
     
-   private LinkedList<String> comPortList = new LinkedList();
+  
 
     public synchronized void serialEvent(SerialPortEvent oEvent) {    
     if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
@@ -59,13 +68,13 @@ public class Data_input implements SerialPortEventListener{
    }
     
     public void init(){
-       if (portId != null){
-           
+       if (portId != null){ 
         // if there is a port open this will close them, so you can not open 2 at the time   
         if (serialPort != null) {
             serialPort.removeEventListener();
             serialPort.close();
-        }     
+        }    
+        
         try {
          // open serial port, and use class name for the appName.
          serialPort = (SerialPort) portId.open(this.getClass().getName(),TIME_OUT);
@@ -82,6 +91,9 @@ public class Data_input implements SerialPortEventListener{
          // add event listeners
          serialPort.addEventListener(this);
          serialPort.notifyOnDataAvailable(true);
+         
+         connection = true;
+         
         } catch (Exception e) {
          System.err.println(e.toString());
         }
@@ -89,23 +101,25 @@ public class Data_input implements SerialPortEventListener{
     }
     
      public int[] getBuffer(){ return buffer; }
+     public Boolean getConnection() { return this.connection; }
         
     public LinkedList<String> getComPort() {
         comPortList.clear();    
        while (portEnum.hasMoreElements()) {
          CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();  
          comPortList.add(currPortId.getName());
+         comPortNumberList.add(currPortId);
        }
       return comPortList;  
     } 
     
-    public void setComPoort(String portName){
-        while (portEnum.hasMoreElements()) {
-            CommPortIdentifier setCurrPortId = (CommPortIdentifier) portEnum.nextElement();  
-            if (setCurrPortId.getName().equals(portName)){
-                portId = setCurrPortId;
+    public void setComPoort(String portName){  
+        for (int i = 0; i < comPortList.size(); i++){
+            if (comPortList.get(i).equals(portName)){
+                portId = comPortNumberList.get(i);
+                break;
             }
-        }       
+        }
     } 
 }
 

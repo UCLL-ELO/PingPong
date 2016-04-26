@@ -6,12 +6,10 @@
 package pingpong;
 
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.Timer;
-import javax.swing.border.LineBorder;
 import pingpong.hardware.Data_input;
 import pingpong.math.ApolloniusSolver;
 import pingpong.visual.Sensor;
@@ -36,43 +34,48 @@ public class Window extends javax.swing.JFrame {
     private ActionListener taskPerformer = new ActionListener() {
   
         @Override
-        public void actionPerformed(ActionEvent e) {  
-       /*  for ( int i : serialCom.getBuffer()){
-             if (i != -1 && i+1 != -1 && i+2 != -1){
-                s1.setRadiusDiff(i);
-                s2.setRadiusDiff(i+1);
-                s3.setRadiusDiff(i+2); 
-             }
-         } */
-            if (makePalletVisual == true){
-                 ball.setVector(ApolloniusSolver.calculateRange(s1, s2, s3));
-                 for ( Visual visual : drawList){
-                     visual.draw();
-                 }  
-            }
+        public void actionPerformed(ActionEvent e) {
+         if (makePalletVisual == true){    
+            for ( Visual visual : drawList){
+                   visual.paintComponent(PalletPanel.getGraphics());
+             }    
+
+             if (serialCom != null) {
+               for ( int i = 0; i < serialCom.getBuffer().length; i++){
+                   if (serialCom.getBuffer()[i] != -1 ){
+
+                       s1.setRadiusDiff(i);
+                       s2.setRadiusDiff(i+1);
+                       s3.setRadiusDiff(i+2); 
+                       
+                       ball.setVector(ApolloniusSolver.calculateRange(s1, s2, s3));
+                       ball.paintComponent(PalletPanel.getGraphics());
+                    }
+                  }
+               }
+           }
         }
     };
     
    
     public Window() {
-        initComponents();
-        this.setTitle("Project Ping Pong -  A new look at the game through the eyes of an electronicus");
+       initComponents();
+       this.setTitle("Project Ping Pong -  A new look at the game through the eyes of an electronicus");
         
-        s1 = new Sensor(PalletPanel, new Vector(PalletPanel.getWidth()/2 -7, 5));
-        s2 = new Sensor(PalletPanel, new Vector(25, PalletPanel.getHeight()/3 + 10));
-        s3 = new Sensor(PalletPanel, new Vector(PalletPanel.getHeight()/3 + 165,
+       s1 = new Sensor( new Vector(PalletPanel.getWidth()/2 -7, 5));
+       s2 = new Sensor( new Vector(25, PalletPanel.getHeight()/3 + 10));
+       s3 = new Sensor( new Vector(PalletPanel.getHeight()/3 + 165,
                                         PalletPanel.getHeight()/3 + 10));
         
-        pallet = new Pallet(PalletPanel);
-        ball = new Ball(PalletPanel);
+       pallet = new Pallet(PalletPanel);
+       ball = new Ball();
         
-        drawList = new LinkedList();
+       drawList = new LinkedList();
         
-        drawList.add(pallet);
-        drawList.add(s1);
-        drawList.add(s2);
-        drawList.add(s3);
-        drawList.add(ball);
+       drawList.add(pallet);
+       drawList.add(s1);
+       drawList.add(s2);
+       drawList.add(s3);
 
        timer = new Timer(100 ,taskPerformer);
        timer.setRepeats(true);
@@ -116,7 +119,7 @@ public class Window extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         WidthSteleInputBox = new javax.swing.JTextField();
         AwsomeTitel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        connectionLabel = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -211,9 +214,12 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        DynamicPanel.setPreferredSize(new java.awt.Dimension(700, 620));
         DynamicPanel.setLayout(new java.awt.CardLayout());
 
         VisualPanel.setBackground(new java.awt.Color(204, 204, 204));
+        VisualPanel.setPreferredSize(new java.awt.Dimension(700, 620));
+        VisualPanel.setRequestFocusEnabled(false);
 
         PalletPanel.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -243,7 +249,7 @@ public class Window extends javax.swing.JFrame {
                 .addGroup(VisualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(AwsomeTitel, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                     .addComponent(PalletPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         VisualPanelLayout.setVerticalGroup(
             VisualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,14 +258,18 @@ public class Window extends javax.swing.JFrame {
                 .addComponent(AwsomeTitel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(PalletPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         DynamicPanel.add(VisualPanel, "card2");
 
         SettingPanel.setBackground(new java.awt.Color(204, 204, 204));
+        SettingPanel.setMaximumSize(new java.awt.Dimension(700, 620));
+        SettingPanel.setPreferredSize(new java.awt.Dimension(700, 620));
+        SettingPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Com" }));
+        SettingPanel.add(comList, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 435, 87, 22));
 
         connectButton.setText("Connect");
         connectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +277,7 @@ public class Window extends javax.swing.JFrame {
                 connectButtonActionPerformed(evt);
             }
         });
+        SettingPanel.add(connectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 476, 238, -1));
 
         SearchComButton.setText("Search Com");
         SearchComButton.addActionListener(new java.awt.event.ActionListener() {
@@ -274,151 +285,65 @@ public class Window extends javax.swing.JFrame {
                 SearchComButtonActionPerformed(evt);
             }
         });
+        SettingPanel.add(SearchComButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 435, -1, -1));
 
         jLabel2.setText("Lenght of pallet + stele: ");
+        SettingPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 156, -1, -1));
 
         jLabel3.setText("width of pallet: ");
+        SettingPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 205, -1, -1));
+        SettingPanel.add(LenghtPalletSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 150, 70, -1));
 
         LenghtSteleInputBox.setText(" ");
+        SettingPanel.add(LenghtSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 176, 70, -1));
 
         jLabel4.setText("Lenght of stele: ");
+        SettingPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 179, -1, -1));
+        SettingPanel.add(WidthPalletInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 202, 70, -1));
 
         jLabel5.setText("width of stele: ");
+        SettingPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 231, -1, -1));
+        SettingPanel.add(WidthSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 228, 70, -1));
 
         AwsomeTitel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         AwsomeTitel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         AwsomeTitel1.setText("Settings");
         AwsomeTitel1.setMaximumSize(new java.awt.Dimension(84, 14));
         AwsomeTitel1.setMinimumSize(new java.awt.Dimension(84, 14));
+        SettingPanel.add(AwsomeTitel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 552, 51));
 
-        jLabel6.setText("There is no connected device");
+        connectionLabel.setText("There is no connected device");
+        SettingPanel.add(connectionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 522, -1, -1));
 
         jLabel20.setText("Lenght between s1 - s2: ");
+        SettingPanel.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, -1));
 
         jLabel21.setText("Lenght between s2 - s3: ");
+        SettingPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
 
         jLabel22.setText("Lenght between s3 - s1: ");
+        SettingPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
+        SettingPanel.add(LenghtS1S2InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 70, -1));
+        SettingPanel.add(LenghtS2S3InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 70, -1));
+        SettingPanel.add(LenghtS3S1InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 70, -1));
 
         CreateProfileButton.setText("Create new profile");
+        CreateProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CreateProfileButtonMousePressed(evt);
+            }
+        });
+        SettingPanel.add(CreateProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 277, -1, 31));
 
         OpenProfileButton.setText("Open profile");
         OpenProfileButton.setPreferredSize(new java.awt.Dimension(121, 23));
-
-        javax.swing.GroupLayout SettingPanelLayout = new javax.swing.GroupLayout(SettingPanel);
-        SettingPanel.setLayout(SettingPanelLayout);
-        SettingPanelLayout.setHorizontalGroup(
-            SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SettingPanelLayout.createSequentialGroup()
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AwsomeTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(jLabel6))
-                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SettingPanelLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(147, 147, 147))
-                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                        .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(SettingPanelLayout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(WidthSteleInputBox, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(SettingPanelLayout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                                        .addComponent(jLabel3)
-                                                        .addGap(95, 95, 95))
-                                                    .addComponent(CreateProfileButton))))
-                                        .addGap(59, 59, 59)))
-                                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(OpenProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel20)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(LenghtS1S2InputBox))
-                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel22)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(LenghtS3S1InputBox, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel21)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(LenghtS2S3InputBox, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(SettingPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(LenghtPalletSteleInputBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(LenghtSteleInputBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(WidthPalletInputBox, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)))))
-                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(SettingPanelLayout.createSequentialGroup()
-                                .addComponent(SearchComButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comList, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(SettingPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(149, Short.MAX_VALUE))
-        );
-        SettingPanelLayout.setVerticalGroup(
-            SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SettingPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AwsomeTitel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel20)
-                        .addComponent(LenghtS1S2InputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(LenghtPalletSteleInputBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LenghtSteleInputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel21)
-                    .addComponent(LenghtS2S3InputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(WidthPalletInputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
-                    .addComponent(LenghtS3S1InputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(WidthSteleInputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(29, 29, 29)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CreateProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(OpenProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
-                .addGroup(SettingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchComButton)
-                    .addComponent(comList, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(connectButton)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel6)
-                .addGap(85, 85, 85))
-        );
+        SettingPanel.add(OpenProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 277, -1, 31));
+        SettingPanel.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 326, 530, 12));
 
         DynamicPanel.add(SettingPanel, "card3");
 
         AboutPanel.setBackground(new java.awt.Color(204, 204, 204));
+        AboutPanel.setMaximumSize(new java.awt.Dimension(700, 620));
 
         AwsomeTitel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         AwsomeTitel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -466,7 +391,7 @@ public class Window extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addGap(226, 226, 226)
                         .addComponent(jLabel8)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AboutPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,7 +448,7 @@ public class Window extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel19)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         DynamicPanel.add(AboutPanel, "card4");
@@ -540,7 +465,7 @@ public class Window extends javax.swing.JFrame {
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+            .addComponent(MenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
             .addComponent(DynamicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -593,13 +518,15 @@ public class Window extends javax.swing.JFrame {
         DynamicPanel.removeAll();
         DynamicPanel.repaint();
         DynamicPanel.revalidate();
-        
-        
+              
         DynamicPanel.add(VisualPanel);
         DynamicPanel.repaint();
         DynamicPanel.revalidate();
         
-        
+        ball.setVector(ApolloniusSolver.calculateRange(s1, s2, s3));
+        for ( Visual visual : drawList){
+            visual.paintComponent(PalletPanel.getGraphics());
+        } 
     }//GEN-LAST:event_VisualButtonMousePressed
 
     private void SearchComButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchComButtonActionPerformed
@@ -620,7 +547,18 @@ public class Window extends javax.swing.JFrame {
 
         serialCom.setComPoort(comList.getSelectedItem().toString());
         serialCom.init();
+        if (serialCom.getConnection() == true){
+            connectionLabel.setText("connected to Ping Pong hardware");
+        }
     }//GEN-LAST:event_connectButtonActionPerformed
+
+    private void CreateProfileButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreateProfileButtonMousePressed
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_CreateProfileButtonMousePressed
 
     /**
      * @param args the command line arguments
@@ -650,10 +588,7 @@ public class Window extends javax.swing.JFrame {
         //</editor-fold>
         Window window = new Window();
         window.setVisible(true);
-        window.pallet.draw();
-        window.s1.draw();
-        window.s2.draw();
-        window.s3.draw();
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -687,6 +622,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JTextField WidthSteleInputBox;
     private javax.swing.JComboBox<String> comList;
     private javax.swing.JButton connectButton;
+    private javax.swing.JLabel connectionLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -705,7 +641,6 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

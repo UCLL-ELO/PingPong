@@ -6,7 +6,7 @@
 package pingpong.visual;
 
 import java.awt.Color;
-import javax.swing.JPanel;
+import java.awt.Graphics;
 import pingpong.Vector;
 
 /**
@@ -15,12 +15,10 @@ import pingpong.Vector;
  */
 public class Ball extends Visual {
 
-    public Ball (JPanel jpanel) { super(jpanel); }
-
     @Override
-    public void draw() {
-        this.graphic.setColor(Color.white);  
-        this.graphic.fillOval(vector.getX(), vector.getY(), 20, 20);
+    public void draw(Graphics graphic) {
+        graphic.setColor(Color.white);  
+        graphic.fillOval(vector.getX(), vector.getY(), 20, 20);
     }
     
     public void setVector(Vector vector) { this.vector = vector; }  

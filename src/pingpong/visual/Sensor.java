@@ -6,7 +6,7 @@
 package pingpong.visual;
 
 import java.awt.Color;
-import javax.swing.JPanel;
+import java.awt.Graphics;
 import pingpong.Vector;
 
 /**
@@ -16,8 +16,7 @@ import pingpong.Vector;
 public class Sensor extends Visual{
     private double radiusDiff;
 
-    public Sensor(JPanel jpanel, Vector vector) {
-        super(jpanel);
+    public Sensor( Vector vector) {
         this.vector = vector;
     }
 
@@ -31,8 +30,8 @@ public class Sensor extends Visual{
     public Vector getVector() { return this.vector; }
 
     @Override
-    public void draw() {
-        this.graphic.setColor(Color.BLUE);  
-        this.graphic.fillOval(vector.getX(), vector.getY(), 20, 20);
+    public void draw(Graphics graphic) {
+        graphic.setColor(Color.BLUE);  
+        graphic.fillOval(vector.getX(), vector.getY(), 20, 20);
     }
 }

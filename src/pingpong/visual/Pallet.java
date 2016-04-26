@@ -7,9 +7,7 @@ package pingpong.visual;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.LinkedList;
 import javax.swing.JPanel;
-import pingpong.Vector;
 
 /**
  *
@@ -17,21 +15,35 @@ import pingpong.Vector;
  */
 public class Pallet extends Visual{
     
+    private int lenghtPalletStele, lenghtStele, lenghtPallet;
+    private int widthPallet, widthStele;
+    
     private Sensor s1,s2,s3; 
     public Pallet(JPanel jpanel){
-       super(jpanel);
-       CreateFramework(jpanel, 285 , 400 );  
+       // default values 
+       this.lenghtPalletStele = 400;
+       this.lenghtStele = 88;
+       this.widthPallet = 285;
+       this.widthStele = 55;
+       
+       this.lenghtPallet = lenghtPalletStele - lenghtStele;
+        
+       CreateFramework(jpanel, widthPallet , lenghtPalletStele );  
     }
     
     @Override
-    public void draw(){
-      super.clear();
-      this.graphic.setColor(Color.DARK_GRAY);  
-      this.graphic.fillOval(vector.getX(), vector.getY(), width, 312);
-      this.graphic.setColor(Color.gray);
-      this.graphic.fillRect(0, vector.getY() + width, width, height-width);
-      this.graphic.setColor(Color.decode("#8B3E2F"));
-      this.graphic.fillRect((vector.getX() + width/2) - 55/2,
-                              vector.getY() + width, 55, height-width);
-    }     
+    public void draw(Graphics graphic){
+      graphic.setColor(Color.DARK_GRAY);  
+      graphic.fillOval(vector.getX(), vector.getY(), width, lenghtPallet);
+      graphic.setColor(new Color(153, 153, 153)); 
+      graphic.fillRect( vector.getX(), vector.getY() + width, width, height-width);
+      graphic.setColor(Color.decode("#8B3E2F"));
+      graphic.fillRect((vector.getX() + width/2) - widthStele/2,
+                    vector.getY() + width, widthStele, height-width);                    
+    } 
+
+    public void setLenghtPalletStele (int value) { this.lenghtPalletStele = value; }
+    public void setLenghtStele (int value) { this.lenghtStele = value; }
+    public void setWidthPallet (int value) { this.widthPallet = value; }
+    public void setWidthStele (int value) { this.widthStele = value; }
 }
