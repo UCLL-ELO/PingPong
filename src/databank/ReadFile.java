@@ -15,9 +15,11 @@ import java.io.BufferedReader;
 
 public class ReadFile {
     private String path;
+    
     public ReadFile (String path){
         this.path = path;
     }
+    
     public String[] OpenFile() throws IOException{
         FileReader fr = new FileReader(path);
         BufferedReader textReader = new BufferedReader(fr);
@@ -32,6 +34,7 @@ public class ReadFile {
         textReader.close( );
         return textData;
     }
+    
     int ReadLines() throws IOException{
         FileReader File_To_Read = new FileReader(path);
         BufferedReader bf = new BufferedReader(File_To_Read);

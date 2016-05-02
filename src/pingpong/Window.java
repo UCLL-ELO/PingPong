@@ -6,6 +6,7 @@
 package pingpong;
 
 
+import databank.FileInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -40,20 +41,15 @@ public class Window extends javax.swing.JFrame {
                    visual.paintComponent(PalletPanel.getGraphics());
              }    
 
-             if (serialCom != null) {
-               for ( int i = 0; i < serialCom.getBuffer().length; i++){
-                   if (serialCom.getBuffer()[i] != -1 ){
-
-                       s1.setRadiusDiff(i);
-                       s2.setRadiusDiff(i+1);
-                       s3.setRadiusDiff(i+2); 
+             if (serialCom != null && serialCom.getBuffer() != null) {
+                s1.setRadiusDiff(serialCom.getBuffer()[0]);
+                s2.setRadiusDiff(serialCom.getBuffer()[1]);
+                s3.setRadiusDiff(serialCom.getBuffer()[2]); 
                        
-                       ball.setVector(ApolloniusSolver.calculateRange(s1, s2, s3));
-                       ball.paintComponent(PalletPanel.getGraphics());
-                    }
-                  }
+                ball.setVector(ApolloniusSolver.calculateRange(s1, s2, s3));
+                ball.paintComponent(PalletPanel.getGraphics()); 
                }
-           }
+           } 
         }
     };
     
@@ -84,6 +80,8 @@ public class Window extends javax.swing.JFrame {
        serialCom = new Data_input();
        
        makePalletVisual = true;
+       
+       // FileInterface.createDirectorys();
     }
 
     /**

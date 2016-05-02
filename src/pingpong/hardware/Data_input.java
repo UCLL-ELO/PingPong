@@ -13,8 +13,11 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,7 +36,6 @@ public class Data_input implements SerialPortEventListener{
     private static final int TIME_OUT = 2000;
     private static int DATA_RATE;
     
-    private int[] buffer = new int[30];
     private Boolean connection;
     
      private LinkedList<String> comPortList;
@@ -45,7 +47,6 @@ public class Data_input implements SerialPortEventListener{
         comPortList = new LinkedList();
         comPortNumberList = new LinkedList();
         
-        for(int i = 0; i < buffer.length; i++){buffer[i] = -1; }
         connection = false;
     }
  
@@ -55,12 +56,8 @@ public class Data_input implements SerialPortEventListener{
     public synchronized void serialEvent(SerialPortEvent oEvent) {    
     if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
      try {
-        for (int i : buffer) {
-            if (buffer[i] == -1){
-                buffer[i] = input.read();
-                break;
-            }
-        }
+       //   System.out.println(input.read());
+        System.out.println(input.readLine());
      } catch (Exception e) {
         System.err.println(e.toString());
      }
@@ -99,9 +96,16 @@ public class Data_input implements SerialPortEventListener{
         }
       }
     }
-    
-     public int[] getBuffer(){ return buffer; }
-     public Boolean getConnection() { return this.connection; }
+    public char[] getBuffer() { 
+        char[] buffer = new char[3];
+        try {   
+            input.read(buffer, 0, 3);
+        } catch (IOException ex) {
+            Logger.getLogger(Data_input.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return buffer;
+    }
+    public Boolean getConnection() { return this.connection; }
         
     public LinkedList<String> getComPort() {
         comPortList.clear();    

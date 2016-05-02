@@ -20,10 +20,12 @@ public class WriteFile {
     public WriteFile(String path){
         this.path = path;
     }
+    
     public WriteFile( String path , boolean app ) {
         this.path = path;
         this.appandToFile = app;
     }
+    
     public void writeToFile( String A, String B,String C ) throws IOException {
         
         FileWriter write = new FileWriter(path, appandToFile);
