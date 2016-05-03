@@ -96,15 +96,8 @@ public class Data_input implements SerialPortEventListener{
         }
       }
     }
-    public char[] getBuffer() { 
-        char[] buffer = new char[3];
-        try {   
-            input.read(buffer, 0, 3);
-        } catch (IOException ex) {
-            Logger.getLogger(Data_input.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return buffer;
-    }
+    
+    public BufferedReader getBuffer() { return input; }
     public Boolean getConnection() { return this.connection; }
         
     public LinkedList<String> getComPort() {
