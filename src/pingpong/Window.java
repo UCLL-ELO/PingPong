@@ -47,7 +47,8 @@ public class Window extends javax.swing.JFrame {
              if (serialCom != null && serialCom.getBuffer() != null) {
                  
                 try {
-                    s1.setRadiusDiff(serialCom.getBuffer().read());
+                  //  Integer.getInteger(serialCom.getBuffer().readLine());
+                    s1.setRadiusDiff(serialCom.getBuffer().read()); 
                     s2.setRadiusDiff(serialCom.getBuffer().read());
                     s3.setRadiusDiff(serialCom.getBuffer().read());
                     
@@ -91,7 +92,6 @@ public class Window extends javax.swing.JFrame {
        
        makePalletVisual = true;
        
-       // FileInterface.createDirectorys();
     }
 
     /**
@@ -118,25 +118,9 @@ public class Window extends javax.swing.JFrame {
         comList = new javax.swing.JComboBox<>();
         connectButton = new javax.swing.JButton();
         SearchComButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        LenghtPalletSteleInputBox = new javax.swing.JTextField();
-        LenghtSteleInputBox = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        WidthPalletInputBox = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        WidthSteleInputBox = new javax.swing.JTextField();
         AwsomeTitel1 = new javax.swing.JLabel();
         connectionLabel = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        LenghtS1S2InputBox = new javax.swing.JTextField();
-        LenghtS2S3InputBox = new javax.swing.JTextField();
-        LenghtS3S1InputBox = new javax.swing.JTextField();
-        CreateProfileButton = new javax.swing.JButton();
-        OpenProfileButton = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
         AboutPanel = new javax.swing.JPanel();
         AwsomeTitel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -279,7 +263,7 @@ public class Window extends javax.swing.JFrame {
         SettingPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Com" }));
-        SettingPanel.add(comList, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 435, 87, 22));
+        SettingPanel.add(comList, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 87, 22));
 
         connectButton.setText("Connect");
         connectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -287,7 +271,7 @@ public class Window extends javax.swing.JFrame {
                 connectButtonActionPerformed(evt);
             }
         });
-        SettingPanel.add(connectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 476, 238, -1));
+        SettingPanel.add(connectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 238, -1));
 
         SearchComButton.setText("Search Com");
         SearchComButton.addActionListener(new java.awt.event.ActionListener() {
@@ -295,25 +279,7 @@ public class Window extends javax.swing.JFrame {
                 SearchComButtonActionPerformed(evt);
             }
         });
-        SettingPanel.add(SearchComButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 435, -1, -1));
-
-        jLabel2.setText("Lenght of pallet + stele: ");
-        SettingPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 156, -1, -1));
-
-        jLabel3.setText("width of pallet: ");
-        SettingPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 205, -1, -1));
-        SettingPanel.add(LenghtPalletSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 150, 70, -1));
-
-        LenghtSteleInputBox.setText(" ");
-        SettingPanel.add(LenghtSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 176, 70, -1));
-
-        jLabel4.setText("Lenght of stele: ");
-        SettingPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 179, -1, -1));
-        SettingPanel.add(WidthPalletInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 202, 70, -1));
-
-        jLabel5.setText("width of stele: ");
-        SettingPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 231, -1, -1));
-        SettingPanel.add(WidthSteleInputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 228, 70, -1));
+        SettingPanel.add(SearchComButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
         AwsomeTitel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         AwsomeTitel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -323,32 +289,10 @@ public class Window extends javax.swing.JFrame {
         SettingPanel.add(AwsomeTitel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 552, 51));
 
         connectionLabel.setText("There is no connected device");
-        SettingPanel.add(connectionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 522, -1, -1));
+        SettingPanel.add(connectionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, -1, -1));
 
-        jLabel20.setText("Lenght between s1 - s2: ");
-        SettingPanel.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, -1));
-
-        jLabel21.setText("Lenght between s2 - s3: ");
-        SettingPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
-
-        jLabel22.setText("Lenght between s3 - s1: ");
-        SettingPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
-        SettingPanel.add(LenghtS1S2InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 70, -1));
-        SettingPanel.add(LenghtS2S3InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 70, -1));
-        SettingPanel.add(LenghtS3S1InputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 70, -1));
-
-        CreateProfileButton.setText("Create new profile");
-        CreateProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                CreateProfileButtonMousePressed(evt);
-            }
-        });
-        SettingPanel.add(CreateProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 277, -1, 31));
-
-        OpenProfileButton.setText("Open profile");
-        OpenProfileButton.setPreferredSize(new java.awt.Dimension(121, 23));
-        SettingPanel.add(OpenProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 277, -1, 31));
-        SettingPanel.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 326, 530, 12));
+        jLabel6.setText("Calibration is still workt on");
+        SettingPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
 
         DynamicPanel.add(SettingPanel, "card3");
 
@@ -444,10 +388,11 @@ public class Window extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
-                .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -566,22 +511,6 @@ public class Window extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_connectButtonActionPerformed
 
-    private void CreateProfileButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreateProfileButtonMousePressed
-        boolean isProfileCreated = false;
-        
-        
-        
-        if (isProfileCreated = true){
-            pallet.setLenghtPalletStele(Integer.parseInt(LenghtPalletSteleInputBox.toString()));
-            pallet.setLenghtStele(Integer.parseInt(LenghtSteleInputBox.toString()));
-            pallet.setWidthPallet(Integer.parseInt(WidthPalletInputBox.toString()));
-            pallet.setWidthStele(Integer.parseInt(WidthSteleInputBox.toString()));
-        }
-        
-        
-        
-    }//GEN-LAST:event_CreateProfileButtonMousePressed
-
     /**
      * @param args the command line arguments
      */
@@ -625,24 +554,15 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel AwsomeTitel;
     private javax.swing.JLabel AwsomeTitel1;
     private javax.swing.JLabel AwsomeTitel2;
-    private javax.swing.JButton CreateProfileButton;
     private javax.swing.JPanel DynamicPanel;
-    private javax.swing.JTextField LenghtPalletSteleInputBox;
-    private javax.swing.JTextField LenghtS1S2InputBox;
-    private javax.swing.JTextField LenghtS2S3InputBox;
-    private javax.swing.JTextField LenghtS3S1InputBox;
-    private javax.swing.JTextField LenghtSteleInputBox;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel MenuPanel;
-    private javax.swing.JButton OpenProfileButton;
     private javax.swing.JPanel PalletPanel;
     private javax.swing.JButton SearchComButton;
     private javax.swing.JPanel SettingPanel;
     private javax.swing.JButton SettingsButton;
     private javax.swing.JButton VisualButton;
     private javax.swing.JPanel VisualPanel;
-    private javax.swing.JTextField WidthPalletInputBox;
-    private javax.swing.JTextField WidthSteleInputBox;
     private javax.swing.JComboBox<String> comList;
     private javax.swing.JButton connectButton;
     private javax.swing.JLabel connectionLabel;
@@ -657,19 +577,12 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

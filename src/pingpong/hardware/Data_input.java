@@ -49,9 +49,6 @@ public class Data_input implements SerialPortEventListener{
         
         connection = false;
     }
- 
-    
-  
 
     public synchronized void serialEvent(SerialPortEvent oEvent) {    
     if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
